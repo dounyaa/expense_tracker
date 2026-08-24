@@ -16,6 +16,7 @@ def create_expense(expense: ExpenseCreate, db: Session = Depends(get_db)) -> Exp
         category=expense.category,
         description=expense.description,
         date=date.today(),
+        is_recurring=expense.is_recurring,
     )
     db.add(new_expense)
     db.commit()
