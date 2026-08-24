@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment variables
+.env
+
+# Tests
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local data
+expenses.db
+expenses.json
