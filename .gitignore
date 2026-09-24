@@ -18,3 +18,8 @@ htmlcov/
 # Local data
 expenses.db
 expenses.json
+
+# Node / React frontend
+node_modules/
+dist/
+.vite/
