@@ -11,29 +11,23 @@ FastAPI, PostgreSQL, SQLAlchemy, Alembic, pytest, Docker
 ```bash
    cp .env.example .env
 ```
-2. Install dependencies:
+2. Start the API and PostgreSQL database:
 ```bash
-   pip install -r requirements.txt
+   docker compose up -d --build
 ```
-3. Start the PostgreSQL database:
+3. Apply database migrations:
 ```bash
-   docker compose up -d
-```
-4. Apply database migrations:
-```bash
-   alembic upgrade head
-```
-5. Run the API:
-```bash
-   uvicorn app.main:app --reload
+   docker compose exec api alembic upgrade head
 ```
 
-The API will be available at `http://127.0.0.1:8000`, with interactive docs at `http://127.0.0.1:8000/docs`.
+The API is available at `http://localhost:8080`.
+Interactive API documentation is available at `http://localhost:8080/docs`.
 
-## Tests
-
+To view API logs:
 ```bash
-pytest -v
+   docker compose logs -f api
 ```
-
-Tests run against an isolated in-memory SQLite database and don't affect your local PostgreSQL data.
+To stop the application:
+```bash
+   docker compose down
+```
