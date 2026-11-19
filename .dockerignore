@@ -1,0 +1,37 @@
+.gitignore
+.git 
+
+docker-compose.yml
+expense-tracker-frontend/*
+frontend-vanilla/*
+README.md
+
+# Python
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/*.db
+**/*.sqlite3
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment variables
+.env
+.env.*
+
+# Tests
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local data
+**/expenses.db
+**/expenses.json
+
+# Node / React frontend
+**/node_modules/
+**/dist/
+**/.vite/
