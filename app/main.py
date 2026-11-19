@@ -1,14 +1,13 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from app.routers.expenses import router as expenses_router
-from app.database import Base, engine
-from app import models
+from app.database import engine
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Au démarrage
-#    Base.metadata.create_all(bind=engine)
     yield
     # À l'arrêt
     engine.dispose()
@@ -17,10 +16,7 @@ app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-    "http://127.0.0.1:5500",
-    "http://localhost:5173",
-],
+    allow_origins=[origin.strip() for origin in os.getenv("CORS_ORIGINS","").split(",") if origin.strip()],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
