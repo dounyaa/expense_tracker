@@ -19,6 +19,16 @@ FastAPI, PostgreSQL, SQLAlchemy, Alembic, pytest, Docker
 ```bash
    docker compose exec api alembic upgrade head
 ```
+4. Check the API liveness:
+```bash
+   curl http://localhost:8080/health
+```
+the /health endpoint checks that the API is running.
+5. Check the API readiness:
+```bash
+   curl http://localhost:8080/ready
+```
+the /ready endpoint checks that the API is ready to serve traffic by verifying that the database responds.
 
 The API is available at `http://localhost:8080`.
 Interactive API documentation is available at `http://localhost:8080/docs`.

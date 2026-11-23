@@ -20,6 +20,16 @@ def test_health_check(client: TestClient) -> None:
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
 
+def test_readiness(client: TestClient) -> None:
+    response = client.get("/ready")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ready"}
+
+def test_readiness_failed(client_without_db) -> None:
+    response = client_without_db.get("/ready")
+    assert response.status_code == 503
+    assert response.json() == {"detail": "Database unavailable"}
+
 
 def test_create_expense(client: TestClient) -> None:
     response = client.post("/expenses/", json=EXPENSE_DATA)
