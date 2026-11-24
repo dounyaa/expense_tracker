@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, status
+from fastapi.responses import JSONResponse
 from app.routers.expenses import router as expenses_router
 from app.database import engine, get_db
 from fastapi.middleware.cors import CORSMiddleware
@@ -18,7 +19,7 @@ async def lifespan(app: FastAPI):
     engine.dispose()
 
 app = FastAPI(lifespan=lifespan)
-logger = logging.getLogger("__name__")
+logger = logging.getLogger(__name__)
 
 app.add_middleware(
     CORSMiddleware,
@@ -41,7 +42,7 @@ def readiness(db: Session = Depends(get_db)) -> dict[str, str]:
         return {"status": "ready"}
     except SQLAlchemyError:
         logger.exception("Database readiness check failed")
-        raise HTTPException(
+        return JSONResponse(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="Database unavailable",
+            content={"status": "unavailable"},
         )
