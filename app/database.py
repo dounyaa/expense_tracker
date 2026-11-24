@@ -8,7 +8,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 if DATABASE_URL is None:
     raise RuntimeError("DATABASE_URL is missing. Please verify your .env file.")
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DATABASE_URL, connect_args={"connect_timeout": 5})
 sessionLocal = sessionmaker(bind = engine, autoflush=False, expire_on_commit = False)
 
 class Base(DeclarativeBase):
