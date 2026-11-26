@@ -25,7 +25,7 @@ def test_readiness(client: TestClient) -> None:
     assert response.status_code == 200
     assert response.json() == {"status": "ready"}
 
-def test_readiness_failedgit(client_without_db) -> None:
+def test_readiness_failed(client_without_db) -> None:
     response = client_without_db.get("/ready")
     assert response.status_code == 503
     assert response.json() == {"status":"unavailable"}
