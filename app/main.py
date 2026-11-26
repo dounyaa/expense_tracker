@@ -36,10 +36,13 @@ def health_check() -> dict[str, str]:
     return {"status": "ok"}
 
 @app.get("/ready")
-def readiness(db: Session = Depends(get_db)) -> dict[str, str]:
+def readiness(db: Session = Depends(get_db)) -> JSONResponse:
     try:
         db.execute(select(1))
-        return {"status": "ready"}
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content={"status": "ready"},
+        )
     except SQLAlchemyError:
         logger.exception("Database readiness check failed")
         return JSONResponse(
